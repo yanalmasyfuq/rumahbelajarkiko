@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Tebak Huruf — Petualangan Huruf</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/game-tebak.css"
+    >
+
+</head>
+
+
+<body class="guess-game">
+
+<div class="guess-shell">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="guess-topbar">
+
+         <button
+    class="icon-button"
+    id="backButton"
+    aria-label="Kembali"
+>
+    <img src="../assets/button/Back.jpg" alt="Kembali" class="icon-button-img">
+</button>
+
+
+        <div class="game-title">
+
+            <img
+        class="title-icon"
+        src="../assets/icons/tebak.jpg"
+        alt="Tebak Huruf"
+    >
+
+            <div>
+
+                <strong>
+                    Tebak Huruf
+                </strong>
+
+                <small>
+                    Dengarkan & pilih
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-stats">
+
+            <div class="stat-pill">
+
+                <span>
+                    ⭐
+                </span>
+
+                <strong id="starCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         PROGRESS
+    ====================================================== -->
+
+    <section class="guess-progress">
+
+        <div class="progress-label">
+
+            <span>
+                Tantangan
+            </span>
+
+            <strong>
+
+                <span id="questionNumber">
+                    1
+                </span>
+
+                / 10
+
+            </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="guess-main">
+
+
+        <!-- Decorative -->
+
+        <!-- Background decorations -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+
+
+        <!-- =================================================
+             KIKO
+        ================================================== -->
+
+        <section class="guess-guide">
+
+            <div class="guess-kiko">
+
+                <img
+                    src="../assets/character/kiko-menunjuk.png"
+                    alt="Kiko"
+
+                    onerror="
+                        this.style.display='none';
+                        document.getElementById('kikoFallback').style.display='flex';
+                    "
+                >
+
+                <div
+                    id="kikoFallback"
+                    class="kiko-fallback"
+                >
+                    🧒
+                </div>
+
+            </div>
+
+
+            <div class="guess-bubble">
+
+                <strong id="guideTitle">
+                    Ayo dengarkan! 👂
+                </strong>
+
+                <p id="guideText">
+                    Kiko akan menyebutkan sebuah huruf.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUESTION CARD
+        ================================================== -->
+
+        <section class="question-card">
+
+
+            <div class="question-badge">
+                TEBAK HURUF
+            </div>
+
+
+            <h1>
+                Huruf apakah ini?
+            </h1>
+
+
+            <p class="question-description">
+                Dengarkan suaranya lalu pilih huruf yang benar.
+            </p>
+
+
+
+            <!-- AUDIO -->
+
+            <button
+                class="big-listen-button"
+                id="listenButton"
+            >
+
+                <span class="listen-icon">
+                    🔊
+                </span>
+
+                <span>
+                    Dengarkan
+                </span>
+
+            </button>
+
+
+            <div
+                class="sound-wave"
+                id="soundWave"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+
+
+            <!-- ANSWERS -->
+
+            <div
+                class="answer-grid"
+                id="answerGrid"
+            >
+
+                <!-- JavaScript -->
+
+            </div>
+
+
+            <!-- FEEDBACK -->
+
+            <div
+                class="answer-feedback"
+                id="answerFeedback"
+            >
+
+                <div
+                    class="feedback-icon"
+                    id="feedbackIcon"
+                >
+                    🎉
+                </div>
+
+                <strong id="feedbackTitle">
+                    Hebat!
+                </strong>
+
+                <p id="feedbackText">
+                    Jawaban kamu benar!
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     COMPLETE MODAL
+====================================================== -->
+
+<div
+    class="game-modal"
+    id="completionModal"
+>
+
+    <div class="completion-card">
+
+        <div class="completion-stars">
+            ⭐ ⭐ ⭐
+        </div>
+
+
+        <div class="completion-kiko">
+            🎉
+        </div>
+
+
+        <h2>
+            Luar Biasa!
+        </h2>
+
+
+        <p>
+            Kamu sudah menyelesaikan
+            tantangan Tebak Huruf!
+        </p>
+
+
+        <div class="completion-result">
+
+            <div>
+
+                <span>
+                    Jawaban benar
+                </span>
+
+                <strong id="finalCorrect">
+                    0 / 10
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Bintang
+                </span>
+
+                <strong>
+                    ⭐ +5
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="completion-actions">
+
+            <button
+                class="modal-button secondary"
+                id="repeatGameButton"
+            >
+                🔄 Main Lagi
+            </button>
+
+
+            <button
+                class="modal-button primary"
+                id="homeButton"
+            >
+                🏠 Menu Utama
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script src="../js/audio.js"></script>
+
+<script src="../js/progress.js"></script>
+
+<script src="../js/game-engine.js"></script>
+
+<script src="../js/game-tebak.js"></script>
+
+</body>
+
+</html>

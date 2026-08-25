@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mengenal Huruf A–Z — Petualangan Huruf</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/game-mengenal.css"
+    >
+</head>
+
+
+<body class="letter-game">
+
+<div class="game-shell">
+
+
+    <!-- =================================================
+         TOP BAR
+    ================================================== -->
+
+    <header class="game-topbar">
+
+        <button
+    class="icon-button"
+    id="backButton"
+    aria-label="Kembali"
+>
+    <img src="../assets/button/Back.jpg" alt="Kembali" class="icon-button-img">
+</button>
+
+
+        <div class="game-title">
+
+            <img
+                class="title-icon"
+                src="../assets/icons/mengenal.jpg"
+                alt="Mengenal Huruf"
+            >
+
+            <div>
+
+                <strong>
+                    Mengenal Huruf
+                </strong>
+
+                <small>
+                    Petualangan Huruf
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-stats">
+
+            <div
+                class="stat-pill"
+                title="Bintang"
+            >
+
+                <span>⭐</span>
+
+                <strong id="starCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         PROGRESS
+    ================================================== -->
+
+    <section class="letter-progress">
+
+        <div class="progress-label">
+
+            <span>
+                Belajar huruf
+            </span>
+
+            <strong>
+
+                <span id="letterNumber">
+                    1
+                </span>
+
+                / 26
+
+            </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+
+        </div>
+
+
+        <div
+            class="alphabet-dots"
+            id="alphabetDots"
+        ></div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MAIN GAME
+    ================================================== -->
+
+    <main class="letter-main">
+
+
+       <!-- Background decorations -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+
+        <div class="butterfly butterfly-1">🦋</div>
+        <div class="butterfly butterfly-2">🦋</div>
+
+        <div class="sparkle sparkle-1">
+            ✦
+        </div>
+
+        <div class="sparkle sparkle-2">
+            ✦
+        </div>
+
+
+
+        <!-- =================================================
+             KIKO
+        ================================================== -->
+
+        <aside class="guide-card">
+
+            <div class="kiko-wrap">
+
+                <img
+                    id="kikoImage"
+                    src="../assets/character/kiko-menunjuk.png"
+                    alt="Kiko"
+
+                    onerror="
+                        this.style.display='none';
+                        document.getElementById('kikoFallback').style.display='flex';
+                    "
+                >
+
+                <div
+                    id="kikoFallback"
+                    class="kiko-fallback"
+                >
+                    🧒
+                </div>
+
+            </div>
+
+
+            <div class="guide-bubble">
+
+                <strong id="guideTitle">
+                    Halo! 👋
+                </strong>
+
+                <p id="guideText">
+                    Ayo kenalan dengan huruf hari ini!
+                </p>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             LETTER CARD
+        ================================================== -->
+
+        <section
+            class="letter-card"
+            id="letterCard"
+        >
+
+            <div class="letter-heading">
+
+                <span class="mini-badge">
+                    HURUF
+                </span>
+
+                <span id="letterWord">
+                    A — a
+                </span>
+
+            </div>
+
+
+
+            <!-- Huruf besar dan kecil -->
+
+            <div class="letter-display">
+
+                <div
+                    class="capital-letter"
+                    id="capitalLetter"
+                >
+                    A
+                </div>
+
+                <div
+                    class="lower-letter"
+                    id="lowerLetter"
+                >
+                    a
+                </div>
+
+            </div>
+
+
+
+            <!-- Tombol suara -->
+
+            <button
+                class="sound-button"
+                id="soundButton"
+            >
+
+                <span class="sound-icon">
+                    🔊
+                </span>
+
+                <span>
+                    Dengarkan
+                </span>
+
+            </button>
+
+
+
+            <!-- Contoh benda -->
+
+            <div class="object-card">
+
+                <div
+                    class="object-visual"
+                    id="objectVisual"
+                >
+                    🍎
+                </div>
+
+
+                <div class="object-info">
+
+                    <span>
+                        Contoh benda
+                    </span>
+
+                    <strong id="objectName">
+                        Apel
+                    </strong>
+
+                    <small id="objectSentence">
+                        A untuk Apel
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             NAVIGATION
+        ================================================== -->
+
+        <nav
+            class="letter-navigation"
+            aria-label="Navigasi huruf"
+        >
+
+            <button
+                class="nav-button secondary"
+                id="prevButton"
+            >
+
+                <span>
+                    ←
+                </span>
+
+                <span>
+                    Sebelumnya
+                </span>
+
+            </button>
+
+
+            <button
+                class="listen-mini"
+                id="repeatButton"
+                aria-label="Ulangi suara"
+            >
+                🔊
+            </button>
+
+
+            <button
+                class="nav-button primary"
+                id="nextButton"
+            >
+
+                <span id="nextLabel">
+                    Berikutnya
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </nav>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     COMPLETION MODAL
+====================================================== -->
+
+<div
+    class="game-modal"
+    id="completionModal"
+    aria-hidden="true"
+>
+
+    <div class="completion-card">
+
+
+        <div
+            class="completion-stars"
+            id="completionStars"
+        >
+            ⭐ ⭐ ⭐
+        </div>
+
+
+        <div class="completion-kiko">
+            🎉
+        </div>
+
+
+        <h2>
+            Hebat Sekali!
+        </h2>
+
+
+        <p>
+
+            Kamu sudah mengenal semua huruf
+            dari <strong>A sampai Z</strong>!
+
+        </p>
+
+
+        <div class="completion-result">
+
+            <div>
+
+                <span>
+                    Huruf dipelajari
+                </span>
+
+                <strong>
+                    26
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Hadiah
+                </span>
+
+                <strong>
+                    ⭐ +3
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="completion-actions">
+
+            <button
+                class="modal-button secondary"
+                id="repeatGameButton"
+            >
+                🔄 Ulangi
+            </button>
+
+
+            <button
+                class="modal-button primary"
+                id="homeButton"
+            >
+                🏠 Menu Utama
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ENGINE
+====================================================== -->
+
+<script src="../js/audio.js"></script>
+
+<script src="../js/progress.js"></script>
+
+<script src="../js/game-engine.js"></script>
+
+<script src="../js/game-mengenal.js"></script>
+
+
+</body>
+</html>
