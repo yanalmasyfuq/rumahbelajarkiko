@@ -1,0 +1,1290 @@
+/* =========================================================
+   GAME 3 — MENULIS HURUF
+========================================================= */
+
+
+:root {
+
+    --blue: #2879d7;
+
+    --blue-dark: #1857a8;
+
+    --orange: #ff9f43;
+
+    --yellow: #ffd95a;
+
+    --green: #63c878;
+
+    --text: #25415f;
+
+    --muted: #6f8499;
+
+}
+
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body.writing-game {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        "Nunito",
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background-image:
+
+        radial-gradient(
+            circle at 15% 12%,
+            rgba(255,255,255,.55)
+            0 55px,
+            transparent 56px
+        ),
+
+        linear-gradient(
+            180deg,
+            rgba(158, 223, 239, 0.35),
+            rgba(233, 249, 223, 0.35)
+        ),
+
+        url("../assets/background/utama.webp");
+
+    background-size:
+        auto,
+        auto,
+        cover;
+
+    background-position:
+        center,
+        center,
+        center center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat;
+
+    background-attachment:
+        scroll,
+        scroll,
+        fixed;
+
+    overflow-x: hidden;
+}
+
+
+.writing-shell {
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.writing-topbar {
+
+    min-height: 76px;
+
+    padding:
+        12px
+        clamp(16px,4vw,48px);
+
+    display: grid;
+
+    grid-template-columns:
+        56px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    background:
+        rgba(255,255,255,.78);
+
+    backdrop-filter:
+        blur(12px);
+
+    border-bottom:
+        2px solid
+        rgba(255,255,255,.7);
+
+}
+
+
+.icon-button {
+
+    width: 48px;
+
+    height: 48px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: var(--blue-dark);
+
+    font-size: 27px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(40,90,130,.12);
+
+}
+
+.icon-button-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+
+.game-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.title-icon {
+
+    width: 40px;
+    height: 40px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 10px
+        rgba(40,90,130,.15);
+}
+
+
+.game-title strong {
+
+    display: block;
+
+    font-size: 20px;
+
+}
+
+
+.game-title small {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.stat-pill {
+
+    min-width: 70px;
+
+    height: 44px;
+
+    padding: 0 13px;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    background: #fff9dc;
+
+    color: #a06d00;
+
+}
+
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.writing-progress {
+
+    width:
+        min(900px,calc(100% - 32px));
+
+    margin:
+        20px auto 0;
+
+}
+
+
+.progress-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #41647d;
+
+    font-size: 14px;
+
+}
+
+
+.progress-track {
+
+    height: 12px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.7);
+
+    overflow: hidden;
+
+}
+
+
+.progress-fill {
+
+    width: 20%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            #a5e88e
+        );
+
+    transition:
+        width .4s ease;
+
+}
+
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.writing-main {
+
+    width:
+        min(1050px,calc(100% - 32px));
+
+    margin:
+        12px auto 0;
+
+    min-height:
+        calc(100vh - 145px);
+
+    display: grid;
+
+    grid-template-columns:
+        200px
+        minmax(400px,620px);
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 30px;
+
+    position: relative;
+
+}
+
+
+
+/* =========================================================
+   CLOUD
+========================================================= */
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.cloud {
+
+    position: absolute;
+
+    width: 140px;
+    height: 50px;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    border-radius: 50px;
+
+    opacity: 0.75;
+
+    z-index: 1;
+
+}
+
+
+.cloud::before,
+.cloud::after {
+
+    content: "";
+
+    position: absolute;
+
+    background: inherit;
+
+    border-radius: 50%;
+
+}
+
+
+.cloud::before {
+
+    width: 65px;
+    height: 65px;
+
+    left: 25px;
+    top: -28px;
+
+}
+
+
+.cloud::after {
+
+    width: 80px;
+    height: 80px;
+
+    right: 18px;
+    top: -38px;
+
+}
+
+
+.cloud-1 {
+
+    top: 11%;
+    left: -20px;
+
+    animation:
+        cloudMove 28s linear infinite;
+
+}
+
+
+.cloud-2 {
+
+    top: 20%;
+    right: -80px;
+
+    transform: scale(0.75);
+
+    animation:
+        cloudMoveReverse 35s linear infinite;
+
+}
+
+
+.cloud-3 {
+
+    top: 7%;
+    left: 45%;
+
+    transform: scale(0.5);
+
+    opacity: 0.55;
+
+    animation:
+        cloudFloat 8s ease-in-out infinite;
+
+}
+
+
+@keyframes cloudFloat {
+
+    0%,100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   GUIDE
+========================================================= */
+
+.writing-guide {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.writing-character {
+
+    width: 140px;
+
+    height: 160px;
+
+    display: flex;
+
+    align-items: end;
+
+    justify-content: center;
+
+    animation:
+        characterFloat
+        3.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+.writing-character img {
+
+    max-width: 100%;
+
+    max-height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+.kiko-fallback {
+
+    display: none;
+
+    width: 100%;
+
+    height: 100%;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 85px;
+
+}
+
+
+@keyframes characterFloat {
+
+    0%,100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px);
+
+    }
+
+}
+
+
+.writing-bubble {
+
+    width: 185px;
+
+    padding: 14px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 14px 35px
+        rgba(40,90,130,.16);
+
+    position: relative;
+
+}
+
+
+.writing-bubble::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -8px;
+
+    left: 82px;
+
+    width: 17px;
+
+    height: 17px;
+
+    background: white;
+
+    transform:
+        rotate(45deg);
+
+}
+
+
+.writing-bubble strong,
+.writing-bubble p {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.writing-bubble strong {
+
+    color: var(--blue-dark);
+
+}
+
+
+.writing-bubble p {
+
+    margin: 5px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+
+/* =========================================================
+   WRITING CARD
+========================================================= */
+
+.writing-card {
+
+    width: 100%;
+
+    padding: 26px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border-radius: 34px;
+
+    box-shadow:
+        0 22px 55px
+        rgba(37,86,115,.18);
+
+    text-align: center;
+
+}
+
+
+.letter-badge {
+
+    display: inline-block;
+
+    padding:
+        6px 12px;
+
+    border-radius: 999px;
+
+    background: #e8f5ff;
+
+    color: var(--blue);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+.writing-card h1 {
+
+    margin:
+        4px 0 0;
+
+    font-family:
+        "Arial Rounded MT Bold",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: 54px;
+
+    line-height: 1;
+
+    color: var(--blue-dark);
+
+}
+
+
+.writing-instruction {
+
+    margin:
+        5px 0 12px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+.canvas-wrapper {
+
+    width:
+        min(100%,430px);
+
+    aspect-ratio:
+        1 / 1;
+
+    margin:
+        0 auto;
+
+    position: relative;
+
+    background:
+        #f8fdff;
+
+    border:
+        4px solid
+        #d7edf9;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset
+        0 0 30px
+        rgba(70,160,210,.05);
+
+}
+
+
+#writingCanvas {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    touch-action: none;
+
+    cursor: crosshair;
+
+}
+
+
+.canvas-hint {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 14px;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        7px 13px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.9);
+
+    color: #648098;
+
+    font-size: 11px;
+
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease;
+
+}
+
+
+.canvas-hint.hidden {
+
+    opacity: 0;
+
+}
+
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.writing-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 14px;
+
+}
+
+
+.control-button {
+
+    min-height: 45px;
+
+    padding:
+        0 17px;
+
+    border: 0;
+
+    border-radius: 15px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+}
+
+
+.control-button.listen {
+
+    background:
+        #eaf5ff;
+
+    color:
+        var(--blue-dark);
+
+}
+
+
+.control-button.reset {
+
+    background:
+        #fff2df;
+
+    color:
+        #b66a14;
+
+}
+
+
+
+/* =========================================================
+   TRACE PROGRESS
+========================================================= */
+
+.trace-progress {
+
+    max-width: 430px;
+
+    margin:
+        15px auto 0;
+
+}
+
+
+.trace-progress-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+.trace-track {
+
+    height: 9px;
+
+    background:
+        #edf4f8;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+}
+
+
+.trace-fill {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6bd080,
+            #a8e88f
+        );
+
+    border-radius: inherit;
+
+    transition:
+        width .25s ease;
+
+}
+
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+.writing-feedback {
+
+    min-height: 55px;
+
+    margin-top: 12px;
+
+    padding:
+        9px 14px;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    background:
+        #f2fbff;
+
+    border-radius: 18px;
+
+    text-align: left;
+
+}
+
+
+.writing-feedback.show {
+
+    display: flex;
+
+    animation:
+        feedbackIn
+        .3s ease;
+
+}
+
+
+.feedback-icon {
+
+    font-size: 30px;
+
+}
+
+
+.writing-feedback strong {
+
+    display: block;
+
+    color: var(--blue-dark);
+
+}
+
+
+.writing-feedback p {
+
+    margin: 2px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+@keyframes feedbackIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(6px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.game-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(20,65,90,.48);
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index: 100;
+
+}
+
+
+.game-modal.show {
+
+    display: flex;
+
+}
+
+
+.completion-card {
+
+    width:
+        min(450px,100%);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 32px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(20,60,90,.28);
+
+}
+
+
+.completion-stars {
+
+    font-size: 25px;
+
+    letter-spacing: 5px;
+
+}
+
+
+.completion-kiko {
+
+    font-size: 70px;
+
+    margin: 10px 0;
+
+}
+
+
+.completion-card h2 {
+
+    margin: 0;
+
+    color: var(--blue-dark);
+
+    font-size: 30px;
+
+}
+
+
+.completion-card p {
+
+    color: var(--muted);
+
+    line-height: 1.5;
+
+}
+
+
+.completion-result {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin: 20px 0;
+
+}
+
+
+.completion-result div {
+
+    padding: 13px;
+
+    border-radius: 18px;
+
+    background: #f5fbff;
+
+}
+
+
+.completion-result span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+.completion-result strong {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 22px;
+
+    color: var(--blue-dark);
+
+}
+
+
+.completion-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+}
+
+
+.modal-button {
+
+    min-height: 48px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+}
+
+
+.modal-button.secondary {
+
+    background: #edf7ff;
+
+    color: var(--blue-dark);
+
+}
+
+
+.modal-button.primary {
+
+    background: var(--orange);
+
+    color: white;
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .writing-main {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 8px;
+
+    }
+
+
+    .writing-guide {
+
+        flex-direction:
+            row;
+
+        justify-content:
+            center;
+
+    }
+
+
+    .writing-character {
+
+        width: 80px;
+
+        height: 95px;
+
+    }
+
+
+    .writing-bubble {
+
+        width: 190px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .writing-topbar {
+
+        padding:
+            10px 12px;
+
+    }
+
+
+    .writing-main {
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .writing-card {
+
+        padding:
+            20px 12px;
+
+        border-radius:
+            27px;
+
+    }
+
+
+    .canvas-wrapper {
+
+        border-radius:
+            22px;
+
+    }
+
+
+    .writing-controls {
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    .cloud-one,
+    .cloud-two {
+
+        display: none;
+
+    }
+
+
+    .completion-actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}

@@ -1,0 +1,1619 @@
+/* =========================================================
+   GAME 2 — TEBAK HURUF
+========================================================= */
+
+:root {
+
+    --blue: #2879d7;
+    --blue-dark: #1857a8;
+
+    --orange: #ff9f43;
+    --yellow: #ffd95a;
+
+    --green: #65c77a;
+    --red: #ef767a;
+
+    --text: #25415f;
+    --muted: #6f8499;
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body.guess-game {
+
+     margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        "Nunito",
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background-image:
+
+        radial-gradient(
+            circle at 15% 12%,
+            rgba(255,255,255,.55)
+            0 55px,
+            transparent 56px
+        ),
+
+        linear-gradient(
+            180deg,
+            rgba(158, 223, 239, 0.35),
+            rgba(233, 249, 223, 0.35)
+        ),
+
+        url("../assets/background/utama.webp");
+
+    background-size:
+        auto,
+        auto,
+        cover;
+
+    background-position:
+        center,
+        center,
+        center center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat;
+
+    background-attachment:
+        scroll,
+        scroll,
+        fixed;
+
+    overflow-x: hidden;
+}
+
+
+.guess-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.guess-topbar {
+
+    min-height: 76px;
+
+    padding:
+        12px
+        clamp(16px,4vw,48px);
+
+    display: grid;
+
+    grid-template-columns:
+        56px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    background:
+        rgba(255,255,255,.76);
+
+    backdrop-filter:
+        blur(12px);
+
+    border-bottom:
+        2px solid
+        rgba(255,255,255,.7);
+
+    position: relative;
+
+    z-index: 10;
+
+}
+
+
+.icon-button {
+
+    width: 48px;
+    height: 48px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: var(--blue-dark);
+
+    font-size: 27px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(40,90,130,.12);
+
+}
+
+.icon-button-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.game-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.title-icon {
+
+    width: 40px;
+    height: 40px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 10px
+        rgba(40,90,130,.15);
+}
+
+
+.game-title strong {
+
+    display: block;
+
+    font-size: 20px;
+
+}
+
+
+.game-title small {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.stat-pill {
+
+    min-width: 70px;
+
+    height: 44px;
+
+    padding: 0 13px;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    background: #fff9dc;
+
+    color: #a06d00;
+
+}
+
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.guess-progress {
+
+    width:
+        min(900px,calc(100% - 32px));
+
+    margin:
+        20px auto 0;
+
+}
+
+
+.progress-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #41647d;
+
+    font-size: 14px;
+
+}
+
+
+.progress-track {
+
+    height: 12px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.65);
+
+    overflow: hidden;
+
+}
+
+
+.progress-fill {
+
+    width: 10%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            #a1e38d
+        );
+
+    transition:
+        width .4s ease;
+
+}
+
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.guess-main {
+    width: min(1050px,calc(100% - 32px));
+    margin: 15px auto 0;
+    min-height: calc(100dvh - 145px);
+
+    display: grid;
+
+    grid-template-columns:
+        210px
+        minmax(400px,620px);
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 32px;
+
+    padding-bottom: 25px;
+
+    position: relative;
+
+}
+
+
+.guess-cloud {
+
+    position: absolute;
+
+    opacity: .65;
+
+    animation:
+        floatCloud
+        7s
+        ease-in-out
+        infinite;
+
+    pointer-events: none;
+
+}
+
+
+.cloud-left {
+
+    left: -15px;
+
+    top: 5%;
+
+    font-size: 60px;
+
+}
+
+
+.cloud-right {
+
+    right: 0;
+
+    top: 18%;
+
+    font-size: 50px;
+
+    animation-delay: -3s;
+
+}
+
+
+@keyframes floatCloud {
+
+    0%,100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   GUIDE
+========================================================= */
+
+.guess-guide {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.guess-kiko {
+
+    width: 145px;
+    height: 165px;
+
+    display: flex;
+
+    align-items: end;
+
+    justify-content: center;
+
+    filter:
+        drop-shadow(
+            0 12px 10px
+            rgba(30,70,100,.13)
+        );
+
+    animation:
+        kikoFloat
+        3.4s
+        ease-in-out
+        infinite;
+
+}
+
+
+.guess-kiko img {
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+.kiko-fallback {
+
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 90px;
+
+}
+
+
+@keyframes kikoFloat {
+
+    0%,100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px);
+
+    }
+
+}
+
+
+.guess-bubble {
+
+    width: 190px;
+
+    padding: 14px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 14px 35px
+        rgba(40,90,130,.16);
+
+    text-align: left;
+
+    position: relative;
+
+}
+
+
+.guess-bubble::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -8px;
+
+    left: 84px;
+
+    width: 17px;
+    height: 17px;
+
+    background: white;
+
+    transform:
+        rotate(45deg);
+
+}
+
+
+.guess-bubble strong,
+.guess-bubble p {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.guess-bubble strong {
+
+    color: var(--blue-dark);
+
+}
+
+
+.guess-bubble p {
+
+    margin: 5px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+
+/* =========================================================
+   QUESTION CARD
+========================================================= */
+
+.question-card {
+
+    width: 100%;
+
+    padding:
+        28px;
+
+    background:
+        rgba(255,255,255,.93);
+
+    border-radius: 34px;
+
+    box-shadow:
+        0 22px 55px
+        rgba(37,86,115,.18);
+
+    text-align: center;
+
+    animation:
+        questionIn
+        .45s ease both;
+
+}
+
+
+@keyframes questionIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px)
+            scale(.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+.question-badge {
+
+    display: inline-block;
+
+    padding:
+        6px
+        12px;
+
+    border-radius: 999px;
+
+    background: #e8f5ff;
+
+    color: var(--blue);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+.question-card h1 {
+
+    margin:
+        12px 0 5px;
+
+    font-size:
+        clamp(24px,4vw,34px);
+
+    color: var(--blue-dark);
+
+}
+
+
+.question-description {
+
+    margin:
+        0 auto 16px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================================================
+   LISTEN
+========================================================= */
+
+.big-listen-button {
+
+    min-width: 190px;
+
+    min-height: 62px;
+
+    padding:
+        10px
+        20px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 0;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #4d9ce8
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 22px
+        rgba(40,121,215,.25);
+
+    transition:
+        transform .18s ease;
+
+}
+
+
+.big-listen-button:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.01);
+
+}
+
+
+.big-listen-button.playing {
+
+    animation:
+        listenPulse
+        .7s
+        ease-in-out
+        infinite
+        alternate;
+
+}
+
+
+.listen-icon {
+
+    font-size: 25px;
+
+}
+
+
+@keyframes listenPulse {
+
+    from {
+
+        transform:
+            scale(1);
+
+    }
+
+    to {
+
+        transform:
+            scale(1.06);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   SOUND WAVE
+========================================================= */
+
+.sound-wave {
+
+    height: 28px;
+
+    margin:
+        9px auto 13px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 4px;
+
+    opacity: .3;
+
+}
+
+
+.sound-wave.active {
+
+    opacity: 1;
+
+}
+
+
+.sound-wave span {
+
+    width: 5px;
+
+    height: 10px;
+
+    border-radius: 5px;
+
+    background: var(--blue);
+
+}
+
+
+.sound-wave.active span {
+
+    animation:
+        wave
+        .6s
+        ease-in-out
+        infinite
+        alternate;
+
+}
+
+
+.sound-wave span:nth-child(2) {
+
+    animation-delay: -.1s;
+
+}
+
+
+.sound-wave span:nth-child(3) {
+
+    animation-delay: -.2s;
+
+}
+
+
+.sound-wave span:nth-child(4) {
+
+    animation-delay: -.3s;
+
+}
+
+
+.sound-wave span:nth-child(5) {
+
+    animation-delay: -.4s;
+
+}
+
+
+@keyframes wave {
+
+    from {
+
+        height: 7px;
+
+    }
+
+    to {
+
+        height: 25px;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ANSWERS
+========================================================= */
+
+.answer-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 13px;
+
+    max-width: 470px;
+
+    margin:
+        0 auto;
+
+}
+
+
+.answer-button {
+
+    min-height: 125px;
+
+    border: 4px solid transparent;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f2faff
+        );
+
+    color: var(--blue-dark);
+
+    font-family:
+        "Arial Rounded MT Bold",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: 65px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 20px
+        rgba(30,80,110,.11);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.answer-button:hover {
+
+    transform:
+        translateY(-4px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 14px 25px
+        rgba(30,80,110,.16);
+
+}
+
+
+.answer-button:active {
+
+    transform:
+        translateY(2px)
+        scale(.97);
+
+}
+
+
+.answer-button.correct {
+
+    background:
+        #dcf8df;
+
+    border-color:
+        var(--green);
+
+    color:
+        #278642;
+
+    animation:
+        correctBounce
+        .5s ease;
+
+}
+
+
+.answer-button.wrong {
+
+    background:
+        #fff0f0;
+
+    border-color:
+        var(--red);
+
+    animation:
+        wrongShake
+        .4s ease;
+
+}
+
+
+.answer-button.disabled {
+
+    pointer-events:
+        none;
+
+    opacity: .65;
+
+}
+
+
+@keyframes correctBounce {
+
+    0% {
+
+        transform:
+            scale(1);
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.1)
+            rotate(-2deg);
+
+    }
+
+    100% {
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes wrongShake {
+
+    0%,100% {
+
+        transform:
+            translateX(0);
+
+    }
+
+    25% {
+
+        transform:
+            translateX(-7px);
+
+    }
+
+    75% {
+
+        transform:
+            translateX(7px);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+.answer-feedback {
+
+    min-height: 65px;
+
+    margin-top: 14px;
+
+    padding:
+        10px 15px;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    border-radius: 18px;
+
+    background:
+        #f3fbff;
+
+    text-align: left;
+
+}
+
+
+.answer-feedback.show {
+
+    display: flex;
+
+    animation:
+        feedbackIn
+        .3s ease;
+
+}
+
+
+.feedback-icon {
+
+    font-size: 30px;
+
+}
+
+
+.answer-feedback strong {
+
+    display: block;
+
+    color: var(--blue-dark);
+
+}
+
+
+.answer-feedback p {
+
+    margin: 2px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+@keyframes feedbackIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(6px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.completion-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(20,65,90,.48);
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index: 100;
+
+}
+
+
+.completion-overlay.show {
+
+    display: flex;
+
+}
+
+
+.completion-card {
+
+    width:
+        min(450px,100%);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 32px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(20,60,90,.28);
+
+}
+
+
+.completion-stars {
+
+    font-size: 25px;
+
+    letter-spacing: 5px;
+
+}
+
+
+.completion-kiko {
+
+    margin: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+.completion-kiko img {
+
+    width: 300px;
+
+    max-height: 250px;
+
+    padding: 10px;
+
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+.completion-card h2 {
+
+    margin: 0;
+
+    color: var(--blue-dark);
+
+    font-size: 30px;
+
+}
+
+
+.completion-card p {
+
+    color: var(--muted);
+
+    line-height: 1.5;
+
+}
+
+
+.completion-result {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 10px;
+
+    margin: 20px 0;
+
+}
+
+
+.completion-result div {
+
+    padding: 13px;
+
+    border-radius: 18px;
+
+    background: #f5fbff;
+
+}
+
+
+.completion-result span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+.completion-result strong {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 22px;
+
+    color: var(--blue-dark);
+
+}
+
+
+.completion-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 10px;
+
+}
+
+
+.modal-button {
+
+    min-height: 48px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+}
+
+
+.modal-button.secondary {
+
+    background: #edf7ff;
+
+    color: var(--blue-dark);
+
+}
+
+
+.modal-button.primary {
+
+    background: var(--orange);
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) and (min-width: 801px) {
+
+    .guess-main {
+        grid-template-columns: 180px minmax(360px,560px);
+        gap: 24px;
+    }
+
+    .guess-kiko {
+        width: 120px;
+        height: 140px;
+    }
+
+    .guess-bubble {
+        width: 170px;
+    }
+
+    .answer-grid {
+        max-width: 420px;
+    }
+
+}
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .guess-main {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+    }
+
+
+    .guess-guide {
+
+        flex-direction: row;
+
+        justify-content: center;
+
+    }
+
+
+    .guess-kiko {
+
+        width: 80px;
+        height: 95px;
+
+    }
+
+
+    .guess-bubble {
+
+        width: 190px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .guess-topbar {
+
+        padding:
+            10px 12px;
+
+    }
+
+
+    .guess-main {
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    .question-card {
+
+        padding:
+            22px 14px;
+
+        border-radius: 27px;
+
+    }
+
+
+    .answer-button {
+
+        min-height: 95px;
+
+        font-size: 50px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .big-listen-button {
+
+        min-height: 55px;
+
+    }
+
+
+    .cloud-left,
+    .cloud-right {
+
+        display: none;
+
+    }
+
+
+    .completion-actions {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =========================================================
+   VERY SMALL PHONE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .answer-grid {
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    .answer-button {
+        min-height: 78px;
+    }
+
+    .answer-balloon {
+        max-width: 90px;
+    }
+
+    .question-card h1 {
+        font-size: 22px;
+    }
+
+    .big-listen-button {
+        min-width: 150px;
+        font-size: 15px;
+    }
+
+    .completion-kiko img {
+        width: 180px;
+        max-height: 160px;
+    }
+
+}
+/* =========================================================
+   MOBILE LANDSCAPE
+========================================================= */
+
+@media (max-height: 480px) and (orientation: landscape) {
+
+    .guess-main {
+        min-height: auto;
+        padding-bottom: 14px;
+    }
+
+    .guess-guide {
+        gap: 4px;
+    }
+
+    .guess-kiko {
+        width: 65px;
+        height: 75px;
+    }
+
+    .guess-bubble {
+        display: none;
+    }
+
+    .question-card {
+        padding: 16px 18px;
+    }
+
+    .question-card h1 {
+        font-size: 22px;
+    }
+
+    .answer-button {
+        min-height: 75px;
+    }
+
+    .answer-balloon {
+        max-width: 85px;
+    }
+
+}
+
+/* =========================================================
+   BALON HURUF (Tebak Huruf)
+========================================================= */
+
+.answer-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform .15s ease;
+}
+
+.answer-button:hover {
+    transform: scale(1.05) translateY(-2px);
+}
+
+.answer-balloon {
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+.answer-button.correct .answer-balloon {
+    filter: drop-shadow(0 0 14px #63c878);
+    transform: scale(1.08);
+}
+
+.answer-button.wrong .answer-balloon {
+    filter: drop-shadow(0 0 14px #e57373);
+    animation: balloonShake .35s ease;
+}
+
+.answer-button.disabled {
+    pointer-events: none;
+    opacity: .55;
+}
+
+@keyframes balloonShake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-6px); }
+    75%      { transform: translateX(6px); }
+}
+
+/* =========================================================
+   BALON MELAYANG (idle animation)
+========================================================= */
+
+@keyframes balloonFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.answer-balloon {
+    animation: balloonFloat 2.6s ease-in-out infinite;
+}
+
+/* biar tiap balon tidak naik-turun bersamaan */
+.answer-button:nth-child(1) .answer-balloon {
+    animation-delay: 0s;
+}
+
+.answer-button:nth-child(2) .answer-balloon {
+    animation-delay: 0.3s;
+}
+
+.answer-button:nth-child(3) .answer-balloon {
+    animation-delay: 0.6s;
+}
+
+/* matikan animasi melayang begitu jawaban sudah dipilih,
+   supaya tidak bentrok dengan efek correct/wrong */
+.answer-button.correct .answer-balloon,
+.answer-button.wrong .answer-balloon,
+.answer-button.disabled .answer-balloon {
+    animation: none;
+}

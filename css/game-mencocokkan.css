@@ -1,0 +1,839 @@
+/* =========================================================
+   GAME — MENCOCOKKAN HURUF
+========================================================= */
+
+:root {
+    --blue: #2879d7;
+    --blue-dark: #1857a8;
+    --orange: #ff9f43;
+    --yellow: #ffd95a;
+    --green: #63c878;
+    --text: #25415f;
+    --muted: #6f8499;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body.writing-game {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Nunito", "Trebuchet MS", Arial, sans-serif;
+    color: var(--text);
+    background-image:
+        radial-gradient(circle at 15% 12%, rgba(255,255,255,.55) 0 55px, transparent 56px),
+        linear-gradient(180deg, rgba(158, 223, 239, 0.35), rgba(233, 249, 223, 0.35)),
+        url("../assets/background/utama.webp");
+    background-size: auto, auto, cover;
+    background-position: center, center, center center;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-attachment: scroll, scroll, fixed;
+    overflow-x: hidden;
+}
+
+.writing-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.writing-topbar {
+    min-height: 76px;
+    padding: 12px clamp(16px,4vw,48px);
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(255,255,255,.7);
+}
+
+.icon-button {
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 16px;
+    background: white;
+    color: var(--blue-dark);
+    font-size: 27px;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(40,90,130,.12);
+}
+
+.icon-button-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.game-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(40,90,130,.15);
+}
+
+.game-title strong {
+    display: block;
+    font-size: 20px;
+}
+
+.game-title small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.stat-pill {
+    min-width: 70px;
+    height: 44px;
+    padding: 0 13px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #fff9dc;
+    color: #a06d00;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.writing-progress {
+    width: min(900px,calc(100% - 32px));
+    margin: 20px auto 0;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #41647d;
+    font-size: 14px;
+}
+
+.progress-track {
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.7);
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 20%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--green), #a5e88e);
+    transition: width .4s ease;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.writing-main {
+    width: min(1050px,calc(100% - 32px));
+    margin: 12px auto 0;
+    min-height: calc(100dvh - 145px);
+    display: grid;
+    grid-template-columns: 200px minmax(400px,620px);
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.cloud {
+    position: absolute;
+    width: 140px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+    opacity: 0.75;
+    z-index: 1;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 65px;
+    height: 65px;
+    left: 25px;
+    top: -28px;
+}
+
+.cloud::after {
+    width: 80px;
+    height: 80px;
+    right: 18px;
+    top: -38px;
+}
+
+.cloud-1 {
+    top: 11%;
+    left: -20px;
+    animation: cloudMove 28s linear infinite;
+}
+
+.cloud-2 {
+    top: 20%;
+    right: -80px;
+    transform: scale(0.75);
+    animation: cloudMoveReverse 35s linear infinite;
+}
+
+.cloud-3 {
+    top: 7%;
+    left: 45%;
+    transform: scale(0.5);
+    opacity: 0.55;
+    animation: cloudFloat 8s ease-in-out infinite;
+}
+
+@keyframes cloudMove {
+    0%   { transform: translateX(-20px); }
+    50%  { transform: translateX(120px); }
+    100% { transform: translateX(-20px); }
+}
+
+@keyframes cloudMoveReverse {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(-150px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes cloudFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-8px); }
+}
+
+
+/* =========================================================
+   GUIDE (Kiko)
+========================================================= */
+
+.writing-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.writing-character {
+    width: 140px;
+    height: 160px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    animation: characterFloat 3.5s ease-in-out infinite;
+}
+
+.writing-character img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.kiko-fallback {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 85px;
+}
+
+@keyframes characterFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-8px); }
+}
+
+.writing-bubble {
+    width: 185px;
+    padding: 14px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 14px 35px rgba(40,90,130,.16);
+    position: relative;
+}
+
+.writing-bubble::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 82px;
+    width: 17px;
+    height: 17px;
+    background: white;
+    transform: rotate(45deg);
+}
+
+.writing-bubble strong,
+.writing-bubble p {
+    position: relative;
+    z-index: 1;
+}
+
+.writing-bubble strong {
+    color: var(--blue-dark);
+}
+
+.writing-bubble p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   CARD (kontainer utama)
+========================================================= */
+
+.writing-card {
+    width: 100%;
+    padding: 26px;
+    background: rgba(255,255,255,.94);
+    border-radius: 34px;
+    box-shadow: 0 22px 55px rgba(37,86,115,.18);
+    text-align: center;
+}
+
+.letter-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #e8f5ff;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.writing-instruction {
+    margin: 5px 0 12px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   AREA MENCOCOKKAN (KOLOM + GARIS)
+========================================================= */
+
+.match-columns-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 20px 30px;
+}
+
+.match-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.match-main {
+    align-items: flex-start;
+    padding-top: 24px;
+}
+
+.match-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.match-column-label {
+    font-weight: 700;
+    color: #2b6ca3;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.match-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+}
+
+.match-letter-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.match-column-right .match-item {
+    margin-left: auto;
+}
+
+.match-dot {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #63c878;
+    transform: translateY(-50%);
+    cursor: grab;
+    touch-action: none;
+}
+
+.match-column-left .match-dot {
+    right: -8px;
+}
+
+.match-column-right .match-dot {
+    left: -8px;
+}
+
+.match-line {
+    stroke: #f5a623;
+    stroke-width: 4;
+    stroke-dasharray: 8 6;
+    fill: none;
+}
+
+.temp-line {
+    stroke: #63c878;
+    stroke-width: 4;
+    stroke-dasharray: 8 6;
+    fill: none;
+}
+
+.match-line.correct {
+    stroke: #63c878;
+    stroke-dasharray: none;
+}
+
+.match-line.incorrect {
+    stroke: #e57373;
+    stroke-dasharray: none;
+}
+
+
+/* =========================================================
+   TOMBOL / CONTROLS
+========================================================= */
+
+.writing-controls,
+.match-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.control-button {
+    min-height: 45px;
+    padding: 0 17px;
+    border: 0;
+    border-radius: 15px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.control-button.listen {
+    background: #eaf5ff;
+    color: var(--blue-dark);
+}
+
+.control-button.reset {
+    background: #fff2df;
+    color: #b66a14;
+}
+
+.control-button.erase.active {
+    background: #ffe1e1;
+    border-color: #e57373;
+}
+
+.control-button.primary {
+    background: #63c878;
+    color: #fff;
+    border-color: #4fae66;
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+.writing-feedback {
+    min-height: 55px;
+    margin-top: 12px;
+    padding: 9px 14px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: #f2fbff;
+    border-radius: 18px;
+    text-align: left;
+}
+
+.writing-feedback.show {
+    display: flex;
+    animation: feedbackIn .3s ease;
+}
+
+.feedback-icon {
+    font-size: 30px;
+}
+
+.writing-feedback strong {
+    display: block;
+    color: var(--blue-dark);
+}
+
+.writing-feedback p {
+    margin: 2px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@keyframes feedbackIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================================================
+   MODAL PENYELESAIAN
+========================================================= */
+
+.completion-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(20,65,90,.48);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+
+.completion-overlay.show {
+    display: flex;
+}
+
+.completion-card {
+    width: min(450px,100%);
+    padding: 30px;
+    text-align: center;
+    background: white;
+    border-radius: 32px;
+    box-shadow: 0 25px 70px rgba(20,60,90,.28);
+}
+
+.completion-stars {
+    font-size: 25px;
+    letter-spacing: 5px;
+}
+
+.completion-kiko {
+
+    margin: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+.completion-kiko img {
+
+    width: 300px;
+
+    max-height: 250px;
+
+    padding: 10px;
+
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+.completion-card h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: 30px;
+}
+
+.completion-card p {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.completion-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.completion-result div {
+    padding: 13px;
+    border-radius: 18px;
+    background: #f5fbff;
+}
+
+.completion-result span {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.completion-result strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 22px;
+    color: var(--blue-dark);
+}
+
+.completion-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.modal-button {
+    min-height: 48px;
+    border: 0;
+    border-radius: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.modal-button.secondary {
+    background: #edf7ff;
+    color: var(--blue-dark);
+}
+
+.modal-button.primary {
+    background: var(--orange);
+    color: white;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) and (min-width: 801px) {
+
+    .writing-main {
+        grid-template-columns: 170px minmax(360px,560px);
+        gap: 22px;
+    }
+
+    .writing-character {
+        width: 115px;
+        height: 135px;
+    }
+
+    .writing-bubble {
+        width: 165px;
+    }
+
+    .match-columns-wrapper {
+        gap: 28px;
+        padding: 18px 22px;
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .writing-main {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .writing-guide {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .writing-character {
+        width: 80px;
+        height: 95px;
+    }
+
+    .writing-bubble {
+        width: 190px;
+    }
+
+    .match-columns-wrapper {
+        padding: 15px 10px;
+        gap: 20px;
+    }
+
+    .match-item {
+        width: 52px;
+        height: 52px;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .writing-topbar {
+        padding: 10px 12px;
+    }
+
+    .writing-main {
+        width: calc(100% - 20px);
+    }
+
+    .writing-card {
+        padding: 20px 12px;
+        border-radius: 27px;
+    }
+
+    .writing-controls,
+    .match-controls {
+        flex-wrap: wrap;
+    }
+
+    .cloud-2,
+    .cloud-3 {
+        display: none;
+    }
+
+    .completion-actions {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =========================================================
+   VERY SMALL PHONE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .match-columns-wrapper {
+        gap: 12px;
+        padding: 12px 6px;
+    }
+
+    .match-item {
+        width: 44px;
+        height: 44px;
+    }
+
+    .match-dot {
+        width: 13px;
+        height: 13px;
+    }
+
+    .match-column-label {
+        font-size: 13px;
+    }
+
+    .control-button {
+        min-height: 40px;
+        padding: 0 13px;
+        font-size: 13px;
+    }
+
+    .completion-kiko img {
+        width: 180px;
+        max-height: 160px;
+    }
+
+}
+
+/* =========================================================
+   MOBILE LANDSCAPE
+========================================================= */
+
+@media (max-height: 480px) and (orientation: landscape) {
+
+    .writing-main {
+        min-height: auto;
+        padding-bottom: 14px;
+    }
+
+    .writing-guide {
+        gap: 4px;
+    }
+
+    .writing-character {
+        width: 60px;
+        height: 70px;
+    }
+
+    .writing-bubble {
+        display: none;
+    }
+
+    .writing-card {
+        padding: 14px 16px;
+    }
+
+    .match-columns-wrapper {
+        padding: 10px 8px;
+        gap: 16px;
+    }
+
+    .match-item {
+        width: 46px;
+        height: 46px;
+    }
+
+}
