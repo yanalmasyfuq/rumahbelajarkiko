@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mencocokkan Huruf — Petualangan Huruf</title>
+
+<!-- SESUDAH -->
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../css/game-mencocokkan.css">
+</head>
+
+<body class="writing-game">
+
+<div class="writing-shell">
+
+    <!-- TOP BAR -->
+    <header class="writing-topbar">
+
+        <button class="icon-button" id="backButton" aria-label="Kembali">
+            <img src="../assets/button/Back.webp" alt="Kembali" class="icon-button-img">
+        </button>
+
+        <div class="game-title">
+            <img class="title-icon" src="../assets/icons/mencocokan.webp" alt="Mencocokkan Huruf">
+            <div>
+                <strong>Mencocokkan Huruf</strong>
+                <small>Pasangkan huruf besar & kecil</small>
+            </div>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-pill">
+                <span>⭐</span>
+                <strong id="starCount">0</strong>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- PROGRESS -->
+    <section class="writing-progress">
+
+        <div class="progress-label">
+            <span>Level</span>
+            <strong>
+                <span id="levelNumber">1</span> / 15
+            </strong>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+    <main class="writing-main match-main">
+
+        <div class="writing-cloud cloud-one">☁️</div>
+        <div class="writing-cloud cloud-two">☁️</div>
+
+        <!-- GUIDE -->
+        <section class="writing-guide">
+
+            <div class="writing-character">
+                <img src="../assets/character/kiko-menunjuk.png" alt="Kiko"
+                    onerror="this.style.display='none'; document.getElementById('kikoFallback').style.display='flex';">
+                <div id="kikoFallback" class="kiko-fallback">🧒</div>
+            </div>
+
+            <div class="writing-bubble">
+                <strong id="guideTitle">Ayo cocokkan! 🔤</strong>
+                <p id="guideText">Pilih huruf besar, lalu pasangannya huruf kecil.</p>
+            </div>
+
+        </section>
+
+
+        <!-- MATCH CARD -->
+      <section class="writing-card match-card-shell">
+
+    <div class="letter-badge">MENCOCOKKAN HURUF</div>
+
+    <p class="writing-instruction">
+        Tarik garis dari huruf besar ke huruf kecil pasangannya
+    </p>
+
+    <div class="match-columns-wrapper" id="matchWrapper">
+
+        <svg class="match-svg" id="matchSvg"></svg>
+
+        <div class="match-column match-column-left" id="leftColumn">
+            <div class="match-column-label">Huruf Besar</div>
+        </div>
+
+        <div class="match-column match-column-right" id="rightColumn">
+            <div class="match-column-label">Huruf Kecil</div>
+        </div>
+
+    </div>
+
+    <div class="match-controls">
+        <button class="control-button erase" id="eraseButton">🧹 Hapus</button>
+        <button class="control-button reset" id="retryButton">🔄 Ulangi</button>
+        
+    </div>
+
+    <div class="writing-feedback" id="matchFeedback">
+        <div class="feedback-icon" id="feedbackIcon">🎉</div>
+        <div>
+            <strong id="feedbackTitle">Hebat!</strong>
+            <p id="feedbackText">Semua huruf berhasil dicocokkan!</p>
+        </div>
+    </div>
+
+</section>
+
+    </main>
+
+</div>
+
+
+<!-- COMPLETION MODAL -->
+<!-- SESUDAH -->
+<div class="completion-overlay" id="completionModal">
+    <div class="completion-card">
+
+        <div class="completion-stars">⭐ ⭐ ⭐</div>
+        <div class="completion-kiko">
+    <img src="../assets/character/kiko-complete.gif" alt="Kiko merayakan">
+</div>
+        <h2>Hebat Sekali!</h2>
+        <p>Kamu sudah bisa mencocokkan huruf besar dan kecil.</p>
+
+        <div class="completion-result">
+            <div>
+                <span>Level selesai</span>
+                <strong><span id="finalLevels">15</span> / 15</strong>
+            </div>
+            <div>
+                <span>Bintang</span>
+                <strong>⭐ +5</strong>
+            </div>
+        </div>
+
+        <div class="completion-actions">
+            <button class="modal-button secondary" id="repeatGameButton">🔄 Main Lagi</button>
+            <button class="modal-button primary" id="homeButton">🏠 Menu Utama</button>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="../js/audio.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/game-engine.js"></script>
+<script src="../js/game-mencocokkan.js"></script>
+
+</body>
+</html>
