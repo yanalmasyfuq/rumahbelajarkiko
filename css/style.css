@@ -70,8 +70,7 @@ body {
             #A8E58C 100%
         );
 
-    overflow-x: hidden;
-    overflow-y: auto;
+   overflow: hidden;   /* ← diubah dari overflow-x/overflow-y terpisah */
 
     color: var(--text);
 
